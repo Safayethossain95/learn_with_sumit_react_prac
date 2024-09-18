@@ -21,6 +21,16 @@ const Tasks = ({ task,onchangetask,ondeletetask }) => {
         )
         : (
         <>
+          <input
+            type="checkbox"
+            checked={task.done}
+            onChange={(e) => {
+              onchangetask({
+                ...task,
+                done: e.target.checked,
+              });
+            }}
+          />
           <h3>{task.text}</h3>
           <button onClick={()=>seteditable(true)}>Edit</button>
         </>

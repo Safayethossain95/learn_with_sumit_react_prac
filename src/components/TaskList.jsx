@@ -1,12 +1,13 @@
 /* eslint-disable no-unused-vars */
-/* eslint-disable react/prop-types */
 
-import { useState } from "react"
+import { useContext, useState } from "react"
 import Tasks from "./Tasks"
+import { TaskContext } from "../contexts/TaskContexts"
 
 
-const TaskList = ({tasks,onchangetask,ondeletetask}) => {
+const TaskList = () => {
     const [isedit,setisedit] = useState(false)
+    const tasks = useContext(TaskContext)
 
     const handleedit = (myvar) => {
         setisedit(myvar)
@@ -17,7 +18,7 @@ const TaskList = ({tasks,onchangetask,ondeletetask}) => {
         {
             tasks.map((task) => (
                 <div key={task.id} style={{display:"flex",margin:"20px 0",gap:"10px"}}>
-                   <Tasks task={task} editable={handleedit} onchangetask={onchangetask} ondeletetask={ondeletetask}/>
+                   <Tasks task={task} editable={handleedit} />
                 </div>
             ))
         }

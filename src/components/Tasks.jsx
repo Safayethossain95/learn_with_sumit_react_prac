@@ -1,10 +1,12 @@
 
 /* eslint-disable react/prop-types */
 
-import { useState } from "react";
+import { useContext, useState } from "react";
+import { TaskDispatchContext } from "../contexts/TaskContexts";
 
-const Tasks = ({ task,onchangetask,ondeletetask }) => {
+const Tasks = ({ task }) => {
 
+  const dispatch = useContext(TaskDispatchContext)
     const [editable,seteditable] = useState(false)
   return (
     <>
@@ -14,7 +16,8 @@ const Tasks = ({ task,onchangetask,ondeletetask }) => {
           <input
             type="text"
             value={task.text}
-            onChange={(e) => onchangetask({...task,text:e.target.value})}
+            onChange={(e) => 
+            dispatch({type:"changed", editedtask: {...task,text:e.target.value}})}
           />
           <button onClick={()=>seteditable(false)}>Save</button>
          </>
@@ -25,11 +28,8 @@ const Tasks = ({ task,onchangetask,ondeletetask }) => {
             type="checkbox"
             checked={task.done}
             onChange={(e) => {
-              onchangetask({
-                ...task,
-                done: e.target.checked,
-              });
-            }}
+              dispatch({type:"changed", editedtask: {...task,done: e.target.checked}})}
+            }
           />
           <h3>{task.text}</h3>
           <button onClick={()=>seteditable(true)}>Edit</button>
@@ -38,7 +38,7 @@ const Tasks = ({ task,onchangetask,ondeletetask }) => {
     }
       
       
-      <button onClick={() => ondeletetask(task.id)}>Delete</button>
+      <button onClick={() => dispatch({type:"delete",delId: task.id})}>Delete</button>
     </>
   );
 };

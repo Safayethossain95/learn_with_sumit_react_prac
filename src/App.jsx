@@ -7,6 +7,7 @@ import AddTask from "./components/AddTask";
 import TaskList from "./components/TaskList";
 import { initialTasks } from "./data/api";
 import taskReducer from "./reducers/taskReducer";
+import { TaskContext, TaskDispatchContext } from "./contexts/TaskContexts";
 function App() {
   const [tasks, dispatch] = useReducer(taskReducer,initialTasks);
 
@@ -27,13 +28,15 @@ function App() {
 
   return (
     <>
-      <div className="app" style={{margin:"200px auto",width:"400px",background:"#ddd",padding:"80px",textAlign:"center"}}>
-        
+    <TaskContext.Provider value={tasks}>
+      <TaskDispatchContext.Provider value={dispatch}>
 
+      <div className="app" style={{margin:"200px auto",width:"400px",background:"#ddd",padding:"80px",textAlign:"center"}}>        
         <AddTask Addit={handleAddTask} />
-        <TaskList tasks={tasks} onchangetask={handleChangeTask} ondeletetask={handleDeleteTask}/>
-        
+        <TaskList tasks={tasks}/>
       </div>
+      </TaskDispatchContext.Provider>
+    </TaskContext.Provider>
     </>
   );
 }

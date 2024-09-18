@@ -1,4 +1,3 @@
-/* eslint-disable no-unused-vars */
 
 
 import { useState } from "react";
@@ -15,13 +14,25 @@ function App() {
     return maxId+1
   }
   const handleAddTask = (text) => {
-    
+    setTasks([
+      ...tasks,
+      {id:genId(tasks) , text: text, done:false}
+    ])
   };
   const handleChangeTask=(editedtask)=>{
-    
+    const newtasks= tasks.map((task) => {
+      if(task.id==editedtask.id){
+        return editedtask;
+      }
+      else{
+        return task;
+      }
+    })
+    setTasks(newtasks)
   }
   const handleDeleteTask=(delId)=>{
-    
+    const newTasks= tasks.filter((task) => task.id!==delId)
+    setTasks(newTasks)
   }
 
   return (
